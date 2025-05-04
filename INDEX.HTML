@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DreamTrip Travel Agency</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      background: url('/assest\ image\ travel.jpg') no-repeat center center/cover;
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    section {
+      padding: 40px 20px;
+    }
+
+    .cards {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: hsl(14, 85%, 45%);
+      padding: 20px;
+      border-radius: 8px;
+      width: 200px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    form input,
+    form textarea,
+    form button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+
+    .scroll-animate {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease-out;
+    }
+
+    .scroll-animate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #333;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>DreamTrip</h1>
+    <p>Your perfect travel starts here</p>
+  </header>
+
+  <section class="destinations scroll-animate">
+    <h2>Popular Destinations</h2>
+    <div class="cards">
+      <div class="card">Paris</div>
+      <div class="card">Bali</div>
+      <div class="card">Tokyo</div>
+    </div>
+  </section>
+
+  <section class="calculator scroll-animate">
+    <h2>Trip Cost Calculator</h2>
+    <form id="calcForm">
+      <label for="people">Number of People:</label>
+      <input type="number" id="people" required />
+
+      <label for="days">Days of Stay:</label>
+      <input type="number" id="days" required />
+
+      <label for="cost">Per Day Cost ($):</label>
+      <input type="number" id="cost" required />
+
+      <button type="submit">Calculate</button>
+      <p id="result"></p>
+    </form>
+  </section>
+
+  <section class="contact scroll-animate">
+    <h2>Contact Us</h2>
+    <form action="https://formsubmit.co/YOUR_EMAIL" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Travel inquiry..." required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 DreamTrip Travel Agency</p>
+  </footer>
+
+  <script>
+    // Reveal scroll animation
+    const scrollElements = document.querySelectorAll('.scroll-animate');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    });
+
+    scrollElements.forEach(el => observer.observe(el));
+
+    // Trip cost calculator
+    document.getElementById('calcForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const people = parseInt(document.getElementById('people').value);
+      const days = parseInt(document.getElementById('days').value);
+      const cost = parseFloat(document.getElementById('cost').value);
+      const total = people * days * cost;
+      document.getElementById('result').textContent = `Estimated Trip Cost: $${total.toFixed(2)}`;
+    });
+  </script>
+
+</body>
+</html>
